@@ -6,12 +6,16 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import yankov.tsvetilian.watchit.Models.Dao.UserSettingsDao;
+import yankov.tsvetilian.watchit.Models.Dao.WatchDao;
 import yankov.tsvetilian.watchit.Models.UserModel;
+import yankov.tsvetilian.watchit.Models.WatchModel;
 
-@Database(entities = {UserModel.class}, version = 1)
+@Database(entities = {UserModel.class, WatchModel.class}, version = 1)
 public abstract class WatchItDatabase extends RoomDatabase {
 
     public abstract UserSettingsDao userSettings();
+
+    public abstract WatchDao watch();
 
     private static WatchItDatabase INSTANCE;
 
