@@ -7,6 +7,7 @@ import android.arch.lifecycle.LiveData;
 import java.util.List;
 
 import yankov.tsvetilian.watchit.Models.UserModel;
+import yankov.tsvetilian.watchit.NetworkContracts.NetworkRequestContract;
 import yankov.tsvetilian.watchit.Repository;
 
 public class UserViewModel extends AndroidViewModel {
@@ -26,5 +27,13 @@ public class UserViewModel extends AndroidViewModel {
 
     public void insert(UserModel userModel) {
         mRepository.insertToSettings(userModel);
+    }
+
+    public void userSignIn(CharSequence watchItServer, CharSequence email, CharSequence password, NetworkRequestContract callback) {
+        //TODO
+    }
+
+    public void userSignUp(CharSequence watchItServer, CharSequence username, CharSequence email, CharSequence password, NetworkRequestContract callback) {
+        //TODO
     }
 }
