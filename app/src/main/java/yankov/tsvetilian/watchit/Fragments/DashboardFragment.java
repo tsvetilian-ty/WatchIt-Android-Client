@@ -3,13 +3,17 @@ package yankov.tsvetilian.watchit.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import yankov.tsvetilian.watchit.Adapters.DashboardTabsAdapter;
 import yankov.tsvetilian.watchit.R;
 
 
@@ -37,7 +41,15 @@ public class DashboardFragment extends Fragment {
     }
 
     private void bindView() {
-        Log.d("WATCHIT", "DASHBOARD");
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+
+        ViewPager tabsPager = view.findViewById(R.id.dashboard_tabs_pager);
+        PagerAdapter pagerAdapter = new DashboardTabsAdapter(getChildFragmentManager());
+        tabsPager.setAdapter(pagerAdapter);
+
+        TabLayout tabs = view.findViewById(R.id.dashboard_tabs);
+        tabs.setupWithViewPager(tabsPager);
     }
 
     @Override
