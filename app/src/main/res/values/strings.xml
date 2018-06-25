@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">WatchIT</string>
+
+
+    <string name="movie_title">Movie Title</string>
+    <string name="play_poster">Poster for the movie</string>
+    <string name="movie_plot">Movie plot</string>
+    <string name="movie_time">Time: 1h 45m</string>
+    <string name="movie_received_from">Received from: @string/app_name</string>
+    <string name="play_btn">Play</string>
+    <string name="season_info">Season: 1</string>
+    <string name="clear_all">Clear All</string>
+    <string name="sign_out">Sign out</string>
     <string name="no_watched_movies">No movie or tv shows available</string>
     <string name="no_video_in_watched">You\'ve never watched a video</string>
     <string name="no_videos_in_watch_later">No videos to watch later</string>
+    <string name="title_activity_player">PlayerActivity</string>
 </resources>
