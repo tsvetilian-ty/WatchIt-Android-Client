@@ -3,7 +3,6 @@ package yankov.tsvetilian.watchit.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class WatchLaterFragment extends Fragment {
     }
 
     private void bindView() {
-        Log.d("WATCHIT", "WATCH LATER");
+      //TODO
     }
 
     @Override
