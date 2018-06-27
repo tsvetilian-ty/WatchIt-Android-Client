@@ -8,7 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,7 +21,6 @@ import java.util.List;
 import yankov.tsvetilian.watchit.Adapters.WatchItemAdapter;
 import yankov.tsvetilian.watchit.Models.WatchModel;
 import yankov.tsvetilian.watchit.R;
-import yankov.tsvetilian.watchit.ViewModels.UserViewModel;
 import yankov.tsvetilian.watchit.ViewModels.WatchViewModel;
 
 
@@ -33,6 +36,7 @@ public class WatchedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_watched, container, false);
         bindView();
         return view;
@@ -62,6 +66,25 @@ public class WatchedFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.watched_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_all:
+                viewModel.deleteAllWatched();
+                break;
+            case R.id.sign_out:
+                Log.d("WATCHIT", "SIGNOUT");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
