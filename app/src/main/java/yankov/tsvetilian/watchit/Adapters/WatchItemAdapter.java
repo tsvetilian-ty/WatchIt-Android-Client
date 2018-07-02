@@ -1,11 +1,11 @@
 package yankov.tsvetilian.watchit.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import yankov.tsvetilian.watchit.Activities.PlayerActivity;
 import yankov.tsvetilian.watchit.Models.WatchModel;
 import yankov.tsvetilian.watchit.R;
 
@@ -54,7 +55,9 @@ public class WatchItemAdapter extends RecyclerView.Adapter<WatchItemAdapter.Watc
         holder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("WATCHIT", "PLAYER");
+                Intent startPlayer = new Intent(context.getApplicationContext(), PlayerActivity.class);
+                startPlayer.putExtra("id", watchLaterList.get(i).getId());
+                context.startActivity(startPlayer);
             }
         });
     }
