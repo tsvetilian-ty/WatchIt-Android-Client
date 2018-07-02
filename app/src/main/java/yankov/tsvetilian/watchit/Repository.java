@@ -2,6 +2,7 @@ package yankov.tsvetilian.watchit;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import yankov.tsvetilian.watchit.Tasks.InsertToSettingsTask;
 import yankov.tsvetilian.watchit.Tasks.InsertToWatchTask;
 import yankov.tsvetilian.watchit.Tasks.UpdateWatchTask;
 import yankov.tsvetilian.watchit.Utilities.Cache;
+import yankov.tsvetilian.watchit.Utilities.DeleteDeviceContract;
+import yankov.tsvetilian.watchit.Utilities.SignOutContract;
 
 public class Repository {
 
@@ -56,6 +59,24 @@ public class Repository {
 
     public void updateWatch(WatchModel watch) {
         new UpdateWatchTask(mWatch).execute(watch);
+    }
+
+    public void logout(final SignOutContract callback) {
+        networkHandler.deleteDeviceFromServer(new DeleteDeviceContract() {
+            @Override
+            public void onDeleted(String message) {
+                deleteAllUsers();
+                deleteAllFromWatch();
+                cache.clearCache();
+                callback.onSignOut("You sign out!");
+            }
+
+            @Override
+            public void onFail(String message) {
+                Log.d("WATCHIT_NETWORK", message);
+                callback.onSignOut("Something went wrong!");
+            }
+        });
     }
 
     public LiveData<WatchModel> getWatchById(int id) {

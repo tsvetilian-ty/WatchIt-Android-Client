@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +31,7 @@ public class WatchLaterFragment extends Fragment {
     private View view;
     private WatchViewModel viewModel;
     private RecyclerView recyclerView;
+    private UserViewModel userViewModel;
 
     public WatchLaterFragment() {
         // Required empty public constructor
@@ -47,6 +47,7 @@ public class WatchLaterFragment extends Fragment {
 
     private void bindView() {
         viewModel = ViewModelProviders.of(this).get(WatchViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         recyclerView = view.findViewById(R.id.watch_later_rv);
         recyclerView.setHasFixedSize(true);
@@ -84,7 +85,12 @@ public class WatchLaterFragment extends Fragment {
                 viewModel.deleteAllWatchLater();
                 break;
             case R.id.sign_out:
-                Log.d("WATCHIT", "SIGNOUT");
+                userViewModel.userSignOut(new SignOutContract() {
+                    @Override
+                    public void onSignOut(String message) {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
 

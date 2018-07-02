@@ -8,19 +8,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
 import yankov.tsvetilian.watchit.Adapters.WatchItemAdapter;
 import yankov.tsvetilian.watchit.Models.WatchModel;
 import yankov.tsvetilian.watchit.R;
+import yankov.tsvetilian.watchit.Utilities.SignOutContract;
+import yankov.tsvetilian.watchit.ViewModels.UserViewModel;
 import yankov.tsvetilian.watchit.ViewModels.WatchViewModel;
 
 
@@ -28,6 +30,7 @@ public class WatchedFragment extends Fragment {
 
     private View view;
     private WatchViewModel viewModel;
+    private UserViewModel userViewModel;
     private RecyclerView recyclerView;
 
     public WatchedFragment() {
@@ -44,6 +47,7 @@ public class WatchedFragment extends Fragment {
 
     private void bindView() {
         viewModel = ViewModelProviders.of(this).get(WatchViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         recyclerView = view.findViewById(R.id.watched_rv);
         recyclerView.setHasFixedSize(true);
@@ -81,7 +85,12 @@ public class WatchedFragment extends Fragment {
                 viewModel.deleteAllWatched();
                 break;
             case R.id.sign_out:
-                Log.d("WATCHIT", "SIGNOUT");
+                userViewModel.userSignOut(new SignOutContract() {
+                    @Override
+                    public void onSignOut(String message) {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
         return super.onOptionsItemSelected(item);

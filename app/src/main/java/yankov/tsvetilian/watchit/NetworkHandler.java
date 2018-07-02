@@ -2,18 +2,21 @@ package yankov.tsvetilian.watchit;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import yankov.tsvetilian.watchit.Models.Network.Requests.DeviceRegistrationRequest;
 import yankov.tsvetilian.watchit.Models.Network.Requests.LoginRequest;
 import yankov.tsvetilian.watchit.Models.Network.Requests.SignUpRequest;
+import yankov.tsvetilian.watchit.Models.Network.Requests.UpdateBroadcastRequest;
 import yankov.tsvetilian.watchit.Models.Network.Responses.AuthResponse;
 import yankov.tsvetilian.watchit.Models.Network.Responses.DeviceRegistrationResponse;
 import yankov.tsvetilian.watchit.Models.UserModel;
@@ -21,6 +24,7 @@ import yankov.tsvetilian.watchit.NetworkContracts.AuthContract;
 import yankov.tsvetilian.watchit.NetworkContracts.DeviceContract;
 import yankov.tsvetilian.watchit.NetworkContracts.NetworkRequestContract;
 import yankov.tsvetilian.watchit.Utilities.Cache;
+import yankov.tsvetilian.watchit.Utilities.DeleteDeviceContract;
 import yankov.tsvetilian.watchit.Utilities.RetrofitClient;
 
 public class NetworkHandler {
@@ -194,4 +198,26 @@ public class NetworkHandler {
         });
     }
 
+    public void deleteDeviceFromServer(final DeleteDeviceContract callback) {
+        if (cache.getDeviceId() != null && cache.getAuthToken() != null && cache.getServerUrl() != null) {
+            DeviceContract retrofitClient = RetrofitClient.getClient(cache.getServerUrl()).create(DeviceContract.class);
+
+            Call<ResponseBody> response = retrofitClient.deleteDevice("Bearer " + cache.getAuthToken(), cache.getDeviceId());
+
+            response.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        callback.onDeleted(null);
+                    }
+                    callback.onFail(null);
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    callback.onFail(null);
+                }
+            });
+        }
+    }
 }

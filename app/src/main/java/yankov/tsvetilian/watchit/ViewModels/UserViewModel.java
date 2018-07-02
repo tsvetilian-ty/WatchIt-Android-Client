@@ -37,4 +37,8 @@ public class UserViewModel extends AndroidViewModel {
     public void userSignUp(CharSequence watchItServer, CharSequence username, CharSequence email, CharSequence password, NetworkRequestContract callback) {
         mRepository.signUp(watchItServer, username, email, password, callback);
     }
+
+    public void userSignOut(SignOutContract callback) {
+        mRepository.logout(callback);
+    }
 }
