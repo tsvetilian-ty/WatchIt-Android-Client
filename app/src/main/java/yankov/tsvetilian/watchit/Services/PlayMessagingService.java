@@ -1,21 +1,28 @@
 package yankov.tsvetilian.watchit.Services;
 
-import android.util.Log;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import yankov.tsvetilian.watchit.NetworkHandler;
 
 public class PlayMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d("WATCHIT", remoteMessage.getData().get("token"));
+        //TODO
     }
 
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        Log.d("WATCHIT", s);
+        refreshToken(s);
+    }
+
+    private void refreshToken(String s) {
+        NetworkHandler networkHandler = NetworkHandler.getStaticNetworkRunner();
+        if (networkHandler != null) {
+            networkHandler.refreshToken(s);
+        }
     }
 
     @Override

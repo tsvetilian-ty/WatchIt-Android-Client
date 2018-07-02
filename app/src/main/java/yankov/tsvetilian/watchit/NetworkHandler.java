@@ -198,6 +198,30 @@ public class NetworkHandler {
         });
     }
 
+    public void refreshToken(final String token) {
+        if (cache.getDeviceId() != null && cache.getAuthToken() != null && cache.getServerUrl() != null) {
+            DeviceContract retrofitClient = RetrofitClient.getClient(cache.getServerUrl()).create(DeviceContract.class);
+
+            UpdateBroadcastRequest updateBroadcastRequest = new UpdateBroadcastRequest(token);
+
+            Call<ResponseBody> response = retrofitClient.updateBroadcaster("Bearer " + cache.getAuthToken(), cache.getDeviceId(), updateBroadcastRequest);
+
+            response.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("WATCHIT_NETWORK", "Update token: " + token);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
     public void deleteDeviceFromServer(final DeleteDeviceContract callback) {
         if (cache.getDeviceId() != null && cache.getAuthToken() != null && cache.getServerUrl() != null) {
             DeviceContract retrofitClient = RetrofitClient.getClient(cache.getServerUrl()).create(DeviceContract.class);
