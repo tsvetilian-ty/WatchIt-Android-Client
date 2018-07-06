@@ -75,6 +75,24 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void playInit(WatchModel watch) {
         player = ExoPlayerFactory.newSimpleInstance(PlayerActivity.this, new DefaultTrackSelector());
+        TextView videoTitle = playerView.findViewById(R.id.play_title);
+        videoTitle.setText(watch.getPresentableName());
+
+        TextView videoFrom = playerView.findViewById(R.id.play_from);
+        videoFrom.setText(String.format("Stream from: %s", watch.getSourceName()));
+
+        TextView videoSeason = playerView.findViewById(R.id.play_season_episode);
+
+        if (watch.getSeason() != null) {
+            videoSeason.setText(watch.getSeason());
+        } else {
+            videoSeason.setVisibility(View.GONE);
+        }
+
+        TextView videoDescription = playerView.findViewById(R.id.play_description);
+        videoDescription.setText(watch.getDescription());
+
+        Picasso.get().load(watch.getPoster()).fit().into(((ImageView) playerView.findViewById(R.id.play_poster)));
 
         playerView.setPlayer(player);
 

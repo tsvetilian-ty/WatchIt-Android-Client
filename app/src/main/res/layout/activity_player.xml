@@ -12,6 +12,7 @@
         app:resize_mode="fill"
         app:fastforward_increment="5000"
         app:rewind_increment="5000"
+        app:controller_layout_id="@layout/player_controls"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
